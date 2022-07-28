@@ -1,5 +1,6 @@
 <template>
   <select 
+    class="form-control"
     v-model="modelValue" 
     @change="changeOption"
   >

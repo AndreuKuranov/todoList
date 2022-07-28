@@ -1,5 +1,5 @@
 <template>
-  <li class="list-group-item d-flex">
+  <li class="d-flex py-2 px-3 mb-2 border rounded">
     <my-button 
       type="button"
       :class="{ 'btn-success': item.done, 'btn-secondary': !item.done }"

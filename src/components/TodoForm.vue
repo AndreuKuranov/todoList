@@ -1,5 +1,5 @@
 <template>
-  <form class="mt-3 mb-4" @submit.prevent>
+  <form class="mt-2 mb-4" @submit.prevent>
     <div class="input-group">
       <my-input
         placeholder="Add new Task"

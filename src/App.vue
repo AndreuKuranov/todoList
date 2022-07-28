@@ -4,21 +4,17 @@
       :message="message"
     />
 
-    <div class="row mb-3">
-      <div class="col-9">
-        <my-input
-          placeholder="Serch tasks"
-          v-model="correctTasks"
-        />
-      </div>
-    </div>
+    <SortTasks
+      :todoItems="todoItems"
+      @sortedTaskList="sortedTaskList"
+    />
 
     <StatisticsTasks
       :todoItems="todoItems"
     />
 
     <TaskList
-      :todoItems="serchTasks"
+      :todoItems="newTasksList"
       @completedTask="completedTask"
     />
 
@@ -33,13 +29,15 @@
   import TodoTitle from '@/components/TodoTitle';
   import TaskList from '@/components/TaskList';
   import StatisticsTasks from '@/components/StatisticsTasks';
+  import SortTasks from '@/components/SortTasks';
 
   export default {
     components: {
       TodoForm,
       TodoTitle,
       TaskList,
-      StatisticsTasks
+      StatisticsTasks,
+      SortTasks
     },
     data() {
       return {
@@ -51,7 +49,7 @@
           {id: 4, text: 'task 4', done: false},
           {id: 5, text: 'task 5', done: false},
         ],
-        correctTasks: '',
+        newTasksList: [],
       }
     },
     methods: {
@@ -66,12 +64,11 @@
       createTask(task) {
         this.todoItems.push(task);
       },
-    },
-    computed: {
-      serchTasks() {
-        return this.todoItems.filter(item => item.text.toLowerCase().includes(this.correctTasks.toLowerCase()))
+
+      sortedTaskList(list) {
+        this.newTasksList = list
       }
-    }
+    },
   }
 </script>
 
