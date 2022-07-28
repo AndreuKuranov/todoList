@@ -4,6 +4,19 @@
       <h1 class="text-center text-dark">{{ message }}</h1>
     </div>
 
+    <div class="d-flex mb-1">
+      <div 
+        class="bg-primary text-white rounded px-2 me-1"
+        v-for="item in [
+          `Сompleted tasks ${completedTasks}`, 
+          `All tasks ${allTasks}`, 
+          `Percent complete taskalist ${percentCompleteTaskalist}%`,
+        ]"
+      >
+        {{ item }}
+      </div>
+    </div>
+
     <ul class="list-group">
       <li 
         class="list-group-item d-flex"
@@ -82,6 +95,25 @@
           this.textInputTask = '';
         }
       },
+    },
+    computed: {
+      completedTasks() {
+        let counter = 0;
+
+        this.todoItems.forEach(item => {
+          if (item.done) {
+            counter += 1;
+          }
+        });
+
+        return counter
+      },
+      allTasks() {
+        return this.todoItems.length
+      },
+      percentCompleteTaskalist() {
+        return (this.completedTasks / this.allTasks * 100).toFixed(0)
+      }
     },
   }
 </script>
