@@ -37,7 +37,13 @@
         return this.todoItems.length
       },
       percentCompleteTaskalist() {
-        return (this.completedTasks / this.allTasks * 100).toFixed(0)
+        let percent = 0;
+
+        if (this.allTasks != 0) {
+          percent = (this.completedTasks / this.allTasks * 100).toFixed(0)
+        }
+
+        return percent
       }
     }
   }

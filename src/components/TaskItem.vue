@@ -1,6 +1,7 @@
 <template>
   <li class="d-flex py-2 px-3 mb-2 border rounded">
     <my-button 
+      :title="item.done ? 'Отменить выполнение' : 'Отметить как выполненную'"
       type="button"
       :class="{ 'btn-success': item.done, 'btn-secondary': !item.done }"
       @click="completedTask(item)"

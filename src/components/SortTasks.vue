@@ -8,7 +8,7 @@
     </div>
     <div class="col-3">
       <my-select
-        v-model="selectedFilter"
+        v-model="defaultSelectedValue"
         :options="filterOptions"
       />
     </div>
@@ -31,7 +31,7 @@ export default {
         {value: 'completedTasks', name: 'Отображать выполненные'},
         {value: 'outstandingTasks', name: 'Отображать невыполненные'},
       ],
-      selectedFilter: 'addTasks',
+      defaultSelectedValue: 'addTasks',
     }
   },
   methods: {
@@ -44,9 +44,9 @@ export default {
   },
   computed: {
     filterTasks() {
-      return this.todoItems.filter(item => this.selectedFilter === 'addTasks' || 
-      this.selectedFilter === 'completedTasks' && item.done || 
-      this.selectedFilter === 'outstandingTasks' && !item.done
+      return this.todoItems.filter(item => this.defaultSelectedValue === this.filterOptions[0].value || 
+      this.defaultSelectedValue === this.filterOptions[1].value && item.done || 
+      this.defaultSelectedValue === this.filterOptions[2].value && !item.done
       )
     },
     serchTasks() {

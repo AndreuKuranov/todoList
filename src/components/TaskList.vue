@@ -1,14 +1,23 @@
 <template>
-  <ul class="list-group">
+  <ul 
+    class="list-group"  
+    v-if="todoItems.length > 0"
+  >
     <transition-group name="tasks-list">
       <TaskItem 
         @completedTask="completedTask"
-        v-for="item in todoItems"
+        v-for="item in newTasksList"
         :key="item.id"
         :item="item"
       />
     </transition-group>
   </ul>
+  <h2 
+    class="text-danger text-center p-3" 
+    v-else
+  >
+    Please add new task
+  </h2>
 </template>
 
 <script>
@@ -16,6 +25,10 @@
 
   export default {
     props: {
+      newTasksList: {
+        type: Object,
+        required: true
+      },
       todoItems: {
         type: Object,
         required: true
