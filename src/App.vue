@@ -4,12 +4,21 @@
       :message="message"
     />
 
+    <div class="row mb-3">
+      <div class="col-9">
+        <my-input
+          placeholder="Serch tasks"
+          v-model="correctTasks"
+        />
+      </div>
+    </div>
+
     <StatisticsTasks
       :todoItems="todoItems"
     />
 
     <TaskList
-      :todoItems="todoItems"
+      :todoItems="serchTasks"
       @completedTask="completedTask"
     />
 
@@ -42,6 +51,7 @@
           {id: 4, text: 'task 4', done: false},
           {id: 5, text: 'task 5', done: false},
         ],
+        correctTasks: '',
       }
     },
     methods: {
@@ -57,6 +67,11 @@
         this.todoItems.push(task);
       },
     },
+    computed: {
+      serchTasks() {
+        return this.todoItems.filter(item => item.text.toLowerCase().includes(this.correctTasks.toLowerCase()))
+      }
+    }
   }
 </script>
 
