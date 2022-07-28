@@ -21,6 +21,27 @@
         <div class="d-flex align-items-center p-2">{{ item.text }}</div>
       </li>
     </ul>
+
+    <form class="mt-3 mb-4" @submit.prevent>
+      <div class="input-group">
+        <input
+          class="form-control"
+          type="text"
+          placeholder="Add new Task"
+          v-model="textInputTask"
+        />
+
+        <button 
+          type="button" 
+          class="input-group-text btn" 
+          :class="{ 'btn-success': validInput() }"
+          :disabled="!validInput()"
+          @click="createTask"
+        >
+          Add
+        </button>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -36,6 +57,7 @@
           {id: 4, text: 'task 4', done: false},
           {id: 5, text: 'task 5', done: false},
         ],
+        textInputTask: ''
       }
     },
     methods: {
@@ -45,6 +67,20 @@
             item.done = item.done ? false : true
           }
         });
+      },
+
+      validInput() {
+        return this.textInputTask.length
+      },
+
+      createTask() {
+        // вешаю дополнительную проверку, потому что в инспекторе можно убрать disabled 
+        // и кнопка будет активна, и тогда можно будет создать пустую задачу
+        if (this.validInput()) {
+          this.todoItems.push({id: Date.now(), text: this.textInputTask, done: false});
+
+          this.textInputTask = '';
+        }
       },
     },
   }
