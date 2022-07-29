@@ -45,6 +45,17 @@
 
         return percent
       }
+    },
+    watch: {
+      todoItems: {
+        handler() {
+          this.$emit('setStatisticsValue' , {
+            allTasks: this.allTasks,
+            completedTasks: this.completedTasks
+          });
+        },
+        deep: true
+      }
     }
   }
 </script>

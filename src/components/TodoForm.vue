@@ -31,12 +31,11 @@
     },
     methods: {
       validInput() {
-        return this.task.text.length
+        const space = /^\S/;
+        return space.test(String(this.task.text))
       },
 
       createTask() {
-        // вешаю дополнительную проверку, потому что в инспекторе можно убрать disabled 
-        // и кнопка будет активна, и тогда можно будет создать пустую задачу
         if (this.validInput()) {
           this.task.id = Date.now();
           this.$emit('create' , this.task);
@@ -46,7 +45,6 @@
             done: false
           };
         }
-        
       },
     },
   }

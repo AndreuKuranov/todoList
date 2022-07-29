@@ -7,15 +7,19 @@
     <SortTasks
       :todoItems="todoItems"
       @sortedTaskList="sortedTaskList"
+      @setSelectedValue="setSelectedValue"
     />
 
     <StatisticsTasks
       :todoItems="todoItems"
+      @setStatisticsValue="setStatisticsValue"
     />
 
     <TaskList
       :todoItems="todoItems"
       :newTasksList="newTasksList"
+      :selectedValue="selectedValue"
+      :statisticsValue="statisticsValue"
       @completedTask="completedTask"
     />
 
@@ -51,6 +55,8 @@
           // {id: 5, text: 'task 5', done: false},
         ],
         newTasksList: [],
+        selectedValue: '',
+        statisticsValue: {},
       }
     },
     methods: {
@@ -67,8 +73,16 @@
       },
 
       sortedTaskList(list) {
-        this.newTasksList = list
-      }
+        this.newTasksList = list;
+      },
+
+      setSelectedValue(val) {
+        this.selectedValue = val;
+      },
+
+      setStatisticsValue(val) {
+        this.statisticsValue = val;
+      },
     },
   }
 </script>

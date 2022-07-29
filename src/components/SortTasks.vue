@@ -21,26 +21,33 @@ export default {
     todoItems: {
       type: Object,
       required: true
-    }
+    },
   },
   data() {
     return {
       correctTasks: '',
       filterOptions: [
-        {value: 'addTasks', name: 'Отображать все задачи'},
+        {value: 'allTasks', name: 'Отображать все задачи'},
         {value: 'completedTasks', name: 'Отображать выполненные'},
         {value: 'outstandingTasks', name: 'Отображать невыполненные'},
       ],
-      defaultSelectedValue: 'addTasks',
+      defaultSelectedValue: 'allTasks',
     }
   },
   methods: {
     sortedTaskList() {
       this.$emit(
         'sortedTaskList' , 
-        this.filterTasks.filter(item => item.text.toLowerCase().includes(this.correctTasks.toLowerCase()))
+        this.serchTasks
       );
+    },
+    setSelectedValue(val) {
+      this.$emit('setSelectedValue', val);
     }
+  },
+  mounted() {
+    this.sortedTaskList();
+    this.setSelectedValue(this.defaultSelectedValue);
   },
   computed: {
     filterTasks() {
@@ -50,15 +57,18 @@ export default {
       )
     },
     serchTasks() {
-      this.sortedTaskList();
+      return this.filterTasks.filter(item => item.text.toLowerCase().includes(this.correctTasks.toLowerCase()))
     }
   },
   watch: {
-    todoItems: {
+    serchTasks: {
       handler() {
         this.sortedTaskList();
       },
       deep: true
+    },
+    defaultSelectedValue(val) {
+      this.setSelectedValue(val);
     }
   }
 }
