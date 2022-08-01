@@ -84,6 +84,24 @@
         this.statisticsValue = val;
       },
     },
+    mounted() {
+      if (localStorage.getItem('todoItems')) {
+        try {
+          this.todoItems = JSON.parse(localStorage.getItem('todoItems'));
+        } catch(e) {
+          localStorage.removeItem('todoItems');
+        }
+      }
+    },
+    watch: {
+      todoItems: {
+        handler() {
+          const parsed = JSON.stringify(this.todoItems);
+          localStorage.setItem('todoItems', parsed);
+        },
+        deep: true
+      }
+    }
   }
 </script>
 
