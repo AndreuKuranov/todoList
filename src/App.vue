@@ -21,11 +21,27 @@
       :selectedValue="selectedValue"
       :statisticsValue="statisticsValue"
       @completedTask="completedTask"
+      @deleteTask="deleteTask"
     />
 
-    <TodoForm
-      @create="createTask"
-    />
+    <div class="d-flex justify-content-end">
+      <my-button
+        class="btn-warning d-flex mt-3 me-3 p-2"
+        type="button"
+        @click="setModalVisible"
+      >
+        <span class="material-symbols-outlined me-2">add</span>
+        task
+      </my-button>
+      <my-modal
+        v-model:stateModal="modalVisible"
+      >
+        <TodoForm
+          @create="createTask"
+        />
+      </my-modal>
+    </div>
+    
   </div>
 </template>
 
@@ -57,6 +73,7 @@
         newTasksList: [],
         selectedValue: '',
         statisticsValue: {},
+        modalVisible: false,
       }
     },
     methods: {
@@ -70,6 +87,11 @@
 
       createTask(task) {
         this.todoItems.push(task);
+        this.modalVisible = false;
+      },
+
+      deleteTask(item) {
+        this.todoItems = this.todoItems.filter((elem) => elem.id !== item.id);
       },
 
       sortedTaskList(list) {
@@ -83,7 +105,12 @@
       setStatisticsValue(val) {
         this.statisticsValue = val;
       },
+
+      setModalVisible() {
+        this.modalVisible = true;
+      }
     },
+    // localStorage
     mounted() {
       if (localStorage.getItem('todoItems')) {
         try {

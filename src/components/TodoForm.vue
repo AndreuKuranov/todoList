@@ -1,20 +1,23 @@
 <template>
-  <form class="mt-2 mb-4" @submit.prevent>
-    <div class="input-group">
+  <form @submit.prevent>
+    <h3 class="text-center text-dark">Создание задачи</h3>
+    <div class="d-flex justify-content-center flex-column mt-4">
       <my-input
         placeholder="Add new Task"
-        v-model="task.text"
+        v-model.trim="task.text"
       />
 
-      <my-button 
-        type="button" 
-        class="input-group-text" 
-        :class="{ 'btn-success': validInput() }"
-        :disabled="!validInput()"
-        @click="createTask"
-      >
-        Add
-      </my-button>
+      <div class="d-flex justify-content-center mt-3">
+        <my-button 
+          type="button" 
+          class="" 
+          :class="{ 'btn-success': validInput(), 'btn-secondary': !validInput() }"
+          :disabled="!validInput()"
+          @click="createTask"
+        >
+          Add
+        </my-button>
+      </div>
     </div>
   </form>
 </template>
@@ -31,8 +34,7 @@
     },
     methods: {
       validInput() {
-        const space = /^\S/;
-        return space.test(String(this.task.text))
+        return this.task.text.length
       },
 
       createTask() {

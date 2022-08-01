@@ -8,7 +8,16 @@
     >
       {{ item.done ? 'completed' : 'in order' }}
     </my-button> 
+
     <div class="d-flex align-items-center p-2">{{ item.text }}</div>
+
+    <my-button
+      type="button"
+      class="d-flex btn-danger ms-auto"
+      @click="deleteTask(item)"
+    >
+      <span class="material-symbols-outlined">delete</span>
+    </my-button> 
   </li>
 </template>
 
@@ -24,6 +33,9 @@
       completedTask(elem) {
         this.$emit("completedTask", elem);
       },
+      deleteTask(elem) {
+        this.$emit("deleteTask", elem);
+      }
     },
   }
 </script>

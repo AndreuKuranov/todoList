@@ -13,6 +13,7 @@
     <transition-group name="tasks-list">
       <TaskItem 
         @completedTask="completedTask"
+        @deleteTask="deleteTask"
         v-for="item in newTasksList"
         :key="item.id"
         :item="item"
@@ -51,6 +52,10 @@
     methods: {
       completedTask(elem) {
         this.$emit("completedTask", elem);
+      },
+
+      deleteTask(elem) {
+        this.$emit("deleteTask", elem);
       },
 
       // Пока так, потом запишу красивей 
