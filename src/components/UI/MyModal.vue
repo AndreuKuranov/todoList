@@ -65,7 +65,6 @@
 .modal-bg-leave-active {
   transition: opacity 0.5s ease;
 }
-
 .modal-bg-enter-from,
 .modal-bg-leave-to {
   opacity: 0;

@@ -13,7 +13,15 @@
 
     <my-button
       type="button"
-      class="d-flex btn-danger ms-auto"
+      class="d-flex btn-warning ms-auto"
+      @click="setModalVisible('edit')"
+    >
+      <span class="material-symbols-outlined">edit</span>
+    </my-button>
+
+    <my-button
+      type="button"
+      class="d-flex btn-danger ms-3"
       @click="deleteTask(item)"
     >
       <span class="material-symbols-outlined">delete</span>
@@ -35,7 +43,11 @@
       },
       deleteTask(elem) {
         this.$emit("deleteTask", elem);
-      }
+      },
+      setModalVisible(val) {
+        this.$emit("setModalVisible", val);
+        this.$emit("setTodoItem", this.item);
+      },
     },
   }
 </script>

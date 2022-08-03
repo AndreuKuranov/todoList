@@ -11,5 +11,4 @@ components.forEach(component => {
 
 app.mount('#app');
 
-
 import "bootstrap/dist/js/bootstrap.js";

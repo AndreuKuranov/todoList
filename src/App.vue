@@ -22,26 +22,31 @@
       :statisticsValue="statisticsValue"
       @completedTask="completedTask"
       @deleteTask="deleteTask"
+      @setModalVisible="setModalVisible"
+      @setTodoItem="setTodoItem"
     />
 
     <div class="d-flex justify-content-end">
       <my-button
         class="btn-warning d-flex mt-3 me-3 p-2"
         type="button"
-        @click="setModalVisible"
+        @click="setModalVisible('create')"
       >
         <span class="material-symbols-outlined me-2">add</span>
         task
       </my-button>
-      <my-modal
-        v-model:stateModal="modalVisible"
-      >
-        <TodoForm
-          @create="createTask"
-        />
-      </my-modal>
     </div>
-    
+
+    <my-modal
+      v-model:stateModal="modalVisible"
+    >
+      <TodoForm
+        @create="createTask"
+        @editTask="editTask"
+        :todoItem="todoItem"
+        :formCondition="formCondition"
+      />
+    </my-modal>
   </div>
 </template>
 
@@ -63,17 +68,13 @@
     data() {
       return {
         message: 'Hello from Vue App',
-        todoItems: [
-          // {id: 1, text: 'task 1', done: false},
-          // {id: 2, text: 'task 2', done: false},
-          // {id: 3, text: 'task 3', done: true},
-          // {id: 4, text: 'task 4', done: false},
-          // {id: 5, text: 'task 5', done: false},
-        ],
+        todoItems: [],
         newTasksList: [],
         selectedValue: '',
         statisticsValue: {},
         modalVisible: false,
+        formCondition: '', 
+        todoItem: {}, 
       }
     },
     methods: {
@@ -94,6 +95,11 @@
         this.todoItems = this.todoItems.filter((elem) => elem.id !== item.id);
       },
 
+      editTask(val) {
+        this.todoItems = this.todoItems.map(elem => elem.id === this.todoItem.id ? { ...elem, text: val} : elem);
+        this.modalVisible = false;
+      },
+
       sortedTaskList(list) {
         this.newTasksList = list;
       },
@@ -106,11 +112,15 @@
         this.statisticsValue = val;
       },
 
-      setModalVisible() {
+      setModalVisible(val) {
+        this.formCondition = val;
         this.modalVisible = true;
+      },
+
+      setTodoItem(elem) {
+        this.todoItem = elem;
       }
     },
-    // localStorage
     mounted() {
       if (localStorage.getItem('todoItems')) {
         try {
@@ -121,12 +131,21 @@
       }
     },
     watch: {
+      // не стал менять, т.к. наблюдатель срабатывает при изменение статуса, редактирование, удаление и создание задачи, сортировка не влияет на объект 
       todoItems: {
         handler() {
           const parsed = JSON.stringify(this.todoItems);
           localStorage.setItem('todoItems', parsed);
         },
         deep: true
+      },
+
+      // чистим состояния, т.к. при не активной модаки они не нужны
+      modalVisible() {
+        if(!this.modalVisible) {
+          this.todoItem = {};
+          this.formCondition = '';
+        }
       }
     }
   }

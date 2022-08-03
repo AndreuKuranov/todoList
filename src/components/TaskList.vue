@@ -14,6 +14,8 @@
       <TaskItem 
         @completedTask="completedTask"
         @deleteTask="deleteTask"
+        @setModalVisible="setModalVisible"
+        @setTodoItem="setTodoItem"
         v-for="item in newTasksList"
         :key="item.id"
         :item="item"
@@ -56,6 +58,14 @@
 
       deleteTask(elem) {
         this.$emit("deleteTask", elem);
+      },
+
+      setModalVisible(val) {
+        this.$emit("setModalVisible", val);
+      },
+
+      setTodoItem(val) {
+        this.$emit("setTodoItem", val);
       },
 
       // Пока так, потом запишу красивей 
