@@ -56,6 +56,8 @@
       />
     </my-modal>
 
+    <FilterMoney />
+
     <div @click="setModalVisible('create')" ref="cursor" class="cursor"></div>
   </div>
 </template>
@@ -66,7 +68,8 @@
   import TaskList from '@/components/TaskList';
   import StatisticsTasks from '@/components/StatisticsTasks';
   import SortTasks from '@/components/SortTasks';
-  import RenderButton from '@/components/renderComponents/RenderButton'
+  import RenderButton from '@/components/renderComponents/RenderButton';
+  import FilterMoney from '@/components/FilterMoney';
 
   export default {
     components: {
@@ -75,7 +78,8 @@
       TaskList,
       StatisticsTasks,
       SortTasks,
-      RenderButton
+      RenderButton,
+      FilterMoney
     },
     data() {
       return {
@@ -86,7 +90,7 @@
         statisticsValue: {},
         modalVisible: false,
         formCondition: '', 
-        todoItem: {}, 
+        todoItem: {},
       }
     },
     methods: {
@@ -170,7 +174,7 @@
           this.formCondition = '';
         }
       }
-    }
+    },
   }
 </script>
 

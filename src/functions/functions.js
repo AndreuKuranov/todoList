@@ -3,3 +3,7 @@ export const uniqueId = () => {
 
   return `${random()}${random()}-${random()}-${random()}-${random()}-${random()}${random()}${random()}`
 }
+
+export const ranksNumber = (n) => {
+  return String(n).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+}
