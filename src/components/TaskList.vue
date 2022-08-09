@@ -7,7 +7,7 @@
   </h2>
 
   <ul 
-    class="list-group"  
+    class="list-group"
     v-else-if="todoItems.length > 0"
   >
     <transition-group name="tasks-list">
@@ -21,6 +21,9 @@
         :item="item"
       />
     </transition-group>
+    <div v-scroll-end="scroll">
+      <div v-if="tasksEnd">end</div>
+    </div>
   </ul>
 
   <h2 
@@ -35,6 +38,9 @@
   import TaskItem from '@/components/TaskItem';
 
   export default {
+    components: { 
+      TaskItem 
+    },
     props: {
       newTasksList: {
         type: Object,
@@ -52,6 +58,10 @@
       },
     },
     methods: {
+      scroll() {
+        console.log('123');
+      },
+
       completedTask(elem) {
         this.$emit("completedTask", elem);
       },
@@ -91,8 +101,7 @@
         }
       }
     },
-    components: { TaskItem }
-}
+  }
 </script>
 
 <style scoped>

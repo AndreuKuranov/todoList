@@ -86,14 +86,7 @@
           return val2
         }
       },
-    },
-    directives: {
-      focus: {
-        mounted(el) {
-          el.focus()
-        }
-      }
-    }   
+    },  
   }
 </script>
 

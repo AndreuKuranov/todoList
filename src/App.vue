@@ -28,9 +28,9 @@
 
     <div class="d-flex justify-content-end">
       <my-button
+        v-mousemove="coordinates"
         class="btn-warning d-flex mt-3 me-3 p-2"
         type="button"
-        @click="setModalVisible('create')"
       >
         <span class="material-symbols-outlined me-2">add</span>
         task
@@ -47,6 +47,8 @@
         :formCondition="formCondition"
       />
     </my-modal>
+
+    <div @click="setModalVisible('create')" ref="cursor" class="cursor"></div>
   </div>
 </template>
 
@@ -63,7 +65,7 @@
       TodoTitle,
       TaskList,
       StatisticsTasks,
-      SortTasks
+      SortTasks,
     },
     data() {
       return {
@@ -78,10 +80,23 @@
       }
     },
     methods: {
+      coordinates(event) {
+        let cursor = this.$refs.cursor
+
+        cursor.style.display = 'block'
+
+        cursor.style.top = `${event.clientY - cursor.offsetHeight / 2}px`;
+        cursor.style.left = `${event.clientX - cursor.offsetWidth / 2}px`;
+
+        cursor.onmouseout = () => {
+          cursor.style.display = 'none';
+        }
+      },
+
       completedTask(elem) {
         this.todoItems.forEach(item => {
           if (item.id === elem.id) {
-            item.done = item.done ? false : true
+            item.done = !item.done
           }
         });
       },
@@ -131,7 +146,6 @@
       }
     },
     watch: {
-      // не стал менять, т.к. наблюдатель срабатывает при изменение статуса, редактирование, удаление и создание задачи, сортировка не влияет на объект 
       todoItems: {
         handler() {
           const parsed = JSON.stringify(this.todoItems);
@@ -140,7 +154,6 @@
         deep: true
       },
 
-      // чистим состояния, т.к. при не активной модаки они не нужны
       modalVisible() {
         if(!this.modalVisible) {
           this.todoItem = {};
@@ -152,5 +165,13 @@
 </script>
 
 <style>
-
+.cursor {
+  display: none;
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border: 1px solid red; 
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.2);
+}
 </style>
