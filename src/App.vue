@@ -27,14 +27,22 @@
     />
 
     <div class="d-flex justify-content-end">
-      <my-button
+      <RenderButton 
+        class="btn-warning d-flex mt-3 me-3 p-2" 
+        v-mousemove="coordinates"
+        :tag="'button'"
+      >
+        <span class="material-symbols-outlined me-2">add</span>
+        task
+      </RenderButton>
+      <!-- <my-button
         v-mousemove="coordinates"
         class="btn-warning d-flex mt-3 me-3 p-2"
         type="button"
       >
         <span class="material-symbols-outlined me-2">add</span>
         task
-      </my-button>
+      </my-button> -->
     </div>
 
     <my-modal
@@ -58,6 +66,7 @@
   import TaskList from '@/components/TaskList';
   import StatisticsTasks from '@/components/StatisticsTasks';
   import SortTasks from '@/components/SortTasks';
+  import RenderButton from '@/components/renderComponents/RenderButton'
 
   export default {
     components: {
@@ -66,6 +75,7 @@
       TaskList,
       StatisticsTasks,
       SortTasks,
+      RenderButton
     },
     data() {
       return {
