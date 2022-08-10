@@ -3,6 +3,7 @@ import { createApp } from 'vue';
 import App from './App';
 import components from '@/components/UI';
 import directives from '@/directives';
+import i18nPlugin from '@/plugins/i18n'
 
 const app = createApp(App);
 
@@ -14,7 +15,7 @@ directives.forEach(directive => {
   app.directive(directive.name, directive);
 })
 
-app.mount('#app');
+app.use(i18nPlugin).mount('#app');
 
 import "bootstrap/dist/js/bootstrap.js";
 

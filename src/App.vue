@@ -27,22 +27,14 @@
     />
 
     <div class="d-flex justify-content-end">
-      <RenderButton 
+      <render-button 
         class="btn-warning d-flex mt-3 me-3 p-2" 
         v-mousemove="coordinates"
         :tag="'button'"
       >
         <span class="material-symbols-outlined me-2">add</span>
         task
-      </RenderButton>
-      <!-- <my-button
-        v-mousemove="coordinates"
-        class="btn-warning d-flex mt-3 me-3 p-2"
-        type="button"
-      >
-        <span class="material-symbols-outlined me-2">add</span>
-        task
-      </my-button> -->
+      </render-button>
     </div>
 
     <my-modal
@@ -68,7 +60,7 @@
   import TaskList from '@/components/TaskList';
   import StatisticsTasks from '@/components/StatisticsTasks';
   import SortTasks from '@/components/SortTasks';
-  import RenderButton from '@/components/renderComponents/RenderButton';
+  // import RenderButton from '@/components/renderComponents/RenderButton';
   import FilterMoney from '@/components/FilterMoney';
 
   export default {
@@ -78,7 +70,7 @@
       TaskList,
       StatisticsTasks,
       SortTasks,
-      RenderButton,
+      // RenderButton,
       FilterMoney
     },
     data() {

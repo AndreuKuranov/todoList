@@ -12,7 +12,6 @@
 </template>
 
 <script>
-  import { ranksNumber } from '@/functions/functions.js';
   import loggingMixin from '@/mixins/loggingMixin';
 
   export default {
@@ -22,17 +21,6 @@
       return {
         money: '',
       }
-    },
-    // фильтры удалили из vue 3, так что реализовал так
-    methods: {
-      prefix(n) {
-        return !n ? n : `${n} руб`;
-      },
-    },
-    computed: {
-      ranks() {
-        return ranksNumber(this.money);
-      },
     },
   }
 </script>
