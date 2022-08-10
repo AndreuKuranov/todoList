@@ -13,8 +13,11 @@
 
 <script>
   import { ranksNumber } from '@/functions/functions.js';
+  import loggingMixin from '@/mixins/loggingMixin';
 
   export default {
+    mixins: [loggingMixin],
+
     data() {
       return {
         money: '',

@@ -20,20 +20,15 @@
 </template>
 
 <script>
+  import loggingMixin from '@/mixins/loggingMixin';
+  import toggleMixin from '@/mixins/toggleMixin';
+
   export default {
     name: 'my-modal',
-    props: {
-      stateModal: {
-        type: Boolean,
-        default: false
-      }
-    },
-    methods: {
-      closeModal() {
-        this.$emit('update:stateModal', false)
-      }
-    },
+    mixins: [loggingMixin],
+    mixins: [toggleMixin],
   }
+
 </script>
 
 <style scoped>
