@@ -5,5 +5,6 @@ export const uniqueId = () => {
 }
 
 export const ranksNumber = (n) => {
-  return String(n).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+  return Number(n).toLocaleString('ru');
+  // return String(n).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
 }

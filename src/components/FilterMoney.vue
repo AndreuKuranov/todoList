@@ -13,6 +13,7 @@
 
 <script>
   import loggingMixin from '@/mixins/loggingMixin';
+  import { ranksNumber } from '@/functions/functions.js';
 
   export default {
     mixins: [loggingMixin],
@@ -21,6 +22,16 @@
       return {
         money: '',
       }
+    },
+    methods: {
+      prefix(n) {
+        return !n ? n : `${n} руб`;
+      },
+    },
+    computed: {
+      ranks() {
+        return ranksNumber(this.money);
+      },
     },
   }
 </script>

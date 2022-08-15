@@ -1,5 +1,4 @@
 import { h } from 'vue';
-import { ranksNumber } from '@/functions/functions.js';
 
 export default {
   install: (app, options) => {
@@ -53,22 +52,6 @@ export default {
           required: true
         }
       }
-    })
-
-    // подключается глобально и использоваться сразу на все компоненты, 
-    // хз как подключать его в определенном компоненте, имя как директиве не задать 
-    app.mixin({
-      // фильтры удалили из vue 3, так что реализовал так
-      methods: {
-        prefix(n) {
-          return !n ? n : `${n} руб`;
-        },
-      },
-      computed: {
-        ranks() {
-          return ranksNumber(this.money);
-        },
-      },
     })
   }
 }

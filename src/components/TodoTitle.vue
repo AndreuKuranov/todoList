@@ -1,7 +1,6 @@
 <template>
   <div class="p-4">
     <h1
-      v-color:color.delay.font="'red'"
       class="text-center"
     >{{ message }}</h1>
   </div>
