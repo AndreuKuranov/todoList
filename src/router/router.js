@@ -1,6 +1,8 @@
 import HomeComponent from '@/pages/HomeComponent';
 import AboutComponent from '@/pages/AboutComponent';
+import AboutApp from '@/pages/AboutApp';
 import TaskListComponent from '@/pages/TaskListComponent';
+import TaskId from '@/pages/TaskId';
 import Error404Component from '@/pages/Error404Component';
 import { createRouter, createWebHistory } from 'vue-router';
 
@@ -11,11 +13,21 @@ const routes = [
   },
   {
     path: '/about',
-    component: AboutComponent
+    component: AboutComponent,
+    children: [
+      {
+        path: 'about-app',
+        component: AboutApp
+      }
+    ]
   },
   {
     path: '/tasklist',
     component: TaskListComponent
+  },
+  {
+    path: '/tasklist/:id',
+    component: TaskId
   },
   {
     path: '/:pathMatch(.*)*',

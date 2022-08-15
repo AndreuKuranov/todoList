@@ -13,7 +13,15 @@
 
     <my-button
       type="button"
-      class="d-flex btn-warning ms-auto"
+      class="d-flex btn-info ms-auto"
+      @click="$router.push(`/tasklist/${item.id}`)"
+    >
+      <span class="material-symbols-outlined">info</span>
+    </my-button>
+
+    <my-button
+      type="button"
+      class="d-flex btn-warning ms-3"
       @click="setModalVisible('edit')"
     >
       <span class="material-symbols-outlined">edit</span>
