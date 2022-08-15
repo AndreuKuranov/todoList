@@ -20,12 +20,10 @@
 </template>
 
 <script>
-  import loggingMixin from '@/mixins/loggingMixin';
   import toggleMixin from '@/mixins/toggleMixin';
 
   export default {
     name: 'my-modal',
-    mixins: [loggingMixin],
     mixins: [toggleMixin],
   }
 

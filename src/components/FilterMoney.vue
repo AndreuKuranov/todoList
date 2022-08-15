@@ -12,12 +12,9 @@
 </template>
 
 <script>
-  import loggingMixin from '@/mixins/loggingMixin';
   import { ranksNumber } from '@/functions/functions.js';
 
   export default {
-    mixins: [loggingMixin],
-
     data() {
       return {
         money: '',

@@ -59,7 +59,6 @@
     },
     methods: {
       scroll() {
-        console.log('123');
       },
 
       completedTask(elem) {
