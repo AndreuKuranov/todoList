@@ -9,13 +9,13 @@
           @click="$router.push({
             path: `/tasklist/${item.id}`, 
             query: { 
-              text: item.text
+              title: item.title
             }
           })" 
           class="btn list-group-item"
           :class="{'bg-success': item.id === $route.params.id}"
         >
-          Task: {{ item.text }}
+          Task: {{ item.title }}
         </li>
     </ul>
   </div>
@@ -38,12 +38,11 @@
     },
     data() {
       return {
-        message: `Task: ${this.$route.query.text}`,
+        message: `Task: ${this.$route.query.title}`,
         todoItems: [],
       }
     },
     mounted() {
-      console.log(this.$route.params.id);
       if (localStorage.getItem('todoItems')) {
         try {
           this.todoItems = JSON.parse(localStorage.getItem('todoItems'));
@@ -54,7 +53,7 @@
     },
     watch: {
       $route(toRoute, ftomRoute) {
-        this.message = `Task: ${toRoute.query.text}`
+        this.message = `Task: ${toRoute.query.title}`
       }
     }
   }

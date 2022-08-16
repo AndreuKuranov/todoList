@@ -57,7 +57,7 @@ export default {
       )
     },
     serchTasks() {
-      return this.filterTasks.filter(item => item.text.toLowerCase().includes(this.correctTasks.toLowerCase()))
+      return this.filterTasks.filter(item => item.title.toLowerCase().includes(this.correctTasks.toLowerCase()))
     }
   },
   watch: {

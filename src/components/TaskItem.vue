@@ -9,7 +9,7 @@
       {{ item.done ? 'completed' : 'in order' }}
     </my-button> 
 
-    <div class="d-flex align-items-center p-2">{{ item.text }}</div>
+    <div class="d-flex align-items-center p-2">{{ item.title }}</div>
 
     <my-button
       type="button"
@@ -17,7 +17,7 @@
       @click="$router.push({
         path: `/tasklist/${item.id}`, 
         query: { 
-          text: item.text
+          title: item.title
         }
       })"
     >

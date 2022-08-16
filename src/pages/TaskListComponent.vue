@@ -60,6 +60,7 @@
   import StatisticsTasks from '@/components/StatisticsTasks';
   import SortTasks from '@/components/SortTasks';
   import FilterMoney from '@/components/FilterMoney';
+  import axios from 'axios';
 
   export default {
     components: {
@@ -119,7 +120,7 @@
       },
 
       editTask(val) {
-        this.todoItems = this.todoItems.map(elem => elem.id === this.todoItem.id ? { ...elem, text: val} : elem);
+        this.todoItems = this.todoItems.map(elem => elem.id === this.todoItem.id ? { ...elem, title: val} : elem);
         this.modalVisible = false;
       },
 
@@ -142,16 +143,19 @@
 
       setTodoItem(elem) {
         this.todoItem = elem;
+      },
+
+      async fetchTasks() {
+        try {
+          const response = await axios.get('http://localhost:5000/tasks');
+          this.todoItems = response.data;
+        } catch (e) {
+          console.log(e.message);
+        }
       }
     },
     mounted() {
-      if (localStorage.getItem('todoItems')) {
-        try {
-          this.todoItems = JSON.parse(localStorage.getItem('todoItems'));
-        } catch(e) {
-          localStorage.removeItem('todoItems');
-        }
-      }
+      this.fetchTasks()
     },
     watch: {
       todoItems: {
