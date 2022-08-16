@@ -106,6 +106,7 @@
         this.todoItems.forEach(item => {
           if (item.id === elem.id) {
             item.done = !item.done
+            this.putTask(item, item.title, item.done);
           }
         });
       },
@@ -119,8 +120,15 @@
         this.todoItems = this.todoItems.filter((elem) => elem.id !== item.id);
       },
 
+      async putTask(task, title, done) {
+        await axios.put(`http://localhost:5000/tasks/${task.id}`, {
+            ...task, done: done, title: title
+        });
+      },
+
       editTask(val) {
-        this.todoItems = this.todoItems.map(elem => elem.id === this.todoItem.id ? { ...elem, title: val} : elem);
+        this.todoItems = this.todoItems.map(elem => elem.id === this.todoItem.id ? { ...elem, title: val.title} : elem);
+        this.putTask(this.todoItem, val.title, this.todoItem.done);
         this.modalVisible = false;
       },
 
@@ -145,7 +153,7 @@
         this.todoItem = elem;
       },
 
-      async fetchTasks() {
+      async getTasks() {
         try {
           const response = await axios.get('http://localhost:5000/tasks');
           this.todoItems = response.data;
@@ -155,7 +163,8 @@
       }
     },
     mounted() {
-      this.fetchTasks()
+      // по хорошему запрос делать в app и данные хранить в нем или в сторе, а так получается запрос происходит каждый раз при смене страници
+      this.getTasks()
     },
     watch: {
       todoItems: {

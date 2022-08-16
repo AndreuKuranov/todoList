@@ -7,7 +7,7 @@
         <my-input
           class="form-control" 
           id="floatingInput" 
-          v-model.trim="task.text"
+          v-model.trim="task.title"
           v-focus
           placeholder="Task"
         />
@@ -30,6 +30,7 @@
 
 <script>
   import { uniqueId } from '@/functions/functions.js';
+  import axios from 'axios';
 
   export default {
     props: {
@@ -45,35 +46,58 @@
     data() {
       return {
         task: { 
-          text: '', 
-          done: false 
+          title: '', 
+          done: false,
+          desc: '',
+          created: '',
+          updated: '',
         },
       }
     },
     mounted() {
       if (this.formCondition === 'edit') {
-        this.task.text = this.todoItem.text
+        this.task.title = this.todoItem.title
       }
     },
     methods: {
       validInput() {
-        return this.task.text.length
+        return this.task.title.length
+      },
+
+      async postTask(task) {
+        try {
+          await axios.post('http://localhost:5000/tasks', {
+            id: task.id, 
+            title: task.title, 
+            done: task.done, 
+            desc: task.desc, 
+            created: task.created, 
+            updated: task.updated,
+          });
+        } catch (e) {
+          console.log(e.message);
+        }
       },
 
       createTask() {
         if (this.formCondition === 'create' && this.validInput()) {
-          
+
           this.task.id = uniqueId();
+
+          this.postTask(this.task);
           this.$emit('create' , this.task);
 
           this.task = {
-            text: '', 
-            done: false
+            title: '', 
+            done: false,
+            desc: '',
+            created: '',
+            updated: '',
           };
         }
 
         if (this.formCondition === 'edit') {
-          this.$emit('editTask', this.task.text);
+          this.$emit('editTask', this.task);
         }
       },
 

@@ -43,6 +43,8 @@
 </template>
 
 <script>
+  import axios from 'axios';
+
   export default {
     props: {
       item: {
@@ -54,7 +56,15 @@
       completedTask(elem) {
         this.$emit("completedTask", elem);
       },
+      async delTask(id) {
+        try {
+          await axios.delete(`http://localhost:5000/tasks/${id}`);
+        } catch (e) {
+          console.log(e.message);
+        }
+      },
       deleteTask(elem) {
+        this.delTask(elem.id)
         this.$emit("deleteTask", elem);
       },
       setModalVisible(val) {

@@ -31,6 +31,7 @@
 
 <script>
   import TodoTitle from '@/components/TodoTitle';
+  import axios from 'axios';
 
   export default {
     components: {
@@ -42,14 +43,19 @@
         todoItems: [],
       }
     },
-    mounted() {
-      if (localStorage.getItem('todoItems')) {
+    methods: {
+      async getTasks() {
         try {
-          this.todoItems = JSON.parse(localStorage.getItem('todoItems'));
-        } catch(e) {
-          localStorage.removeItem('todoItems');
+          const response = await axios.get('http://localhost:5000/tasks');
+          this.todoItems = response.data;
+        } catch (e) {
+          console.log(e.message);
         }
       }
+    },  
+    mounted() {
+      // по хорошему это берется из стора или нужно хранить данные в корневом компоненте и потом раскидывать, а так получается лишний запрос
+      this.getTasks()
     },
     watch: {
       $route(toRoute, ftomRoute) {
