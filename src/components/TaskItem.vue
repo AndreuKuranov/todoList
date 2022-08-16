@@ -14,7 +14,12 @@
     <my-button
       type="button"
       class="d-flex btn-info ms-auto"
-      @click="$router.push(`/tasklist/${item.id}`)"
+      @click="$router.push({
+        path: `/tasklist/${item.id}`, 
+        query: { 
+          text: item.text
+        }
+      })"
     >
       <span class="material-symbols-outlined">info</span>
     </my-button>
