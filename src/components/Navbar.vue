@@ -25,6 +25,13 @@
       >
         About
       </my-button>
+      <my-button 
+        type="button"
+        class="btn-light ms-auto"
+        @click="login"
+      >
+        {{ loginCheck() ? 'Выйти' : 'Войти' }}
+      </my-button>
     </div>
   </nav>
   <!-- ----------------------------------------------- 2 вариант ----------------------------------------------- -->
@@ -65,6 +72,19 @@
       clessNavActive(cl) {
         return this.$route.path === cl ? 'btn-info' : 'btn-light'
       },
+      isAuthorized() { 
+        return JSON.parse(localStorage.getItem('registration'))
+      },
+      loginCheck() {
+        return this.isAuthorized() ? this.isAuthorized().registrationStatus : false
+      },
+      login() {
+        if (this.isAuthorized()) {
+          localStorage.removeItem('registration');
+        }
+
+        this.$router.push('/');
+      }
     },
   }
 </script>

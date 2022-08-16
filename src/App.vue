@@ -2,7 +2,7 @@
   <div>
     <Navbar />
     <div class="container-xl">
-      <router-view></router-view>
+      <router-view />
     </div>
   </div>
 </template>
@@ -11,7 +11,7 @@
   import Navbar from '@/components/Navbar.vue';
 
   export default {
-    components: { Navbar }
+    components: { Navbar },
   }
 </script>
 

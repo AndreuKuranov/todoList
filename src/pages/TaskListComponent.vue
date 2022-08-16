@@ -70,6 +70,11 @@
       SortTasks,
       FilterMoney
     },
+    props: {
+      reg: {
+        type: Object
+      },
+    },
     data() {
       return {
         message: 'Hello from Vue App',
