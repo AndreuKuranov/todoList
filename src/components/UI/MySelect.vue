@@ -1,8 +1,8 @@
 <template>
   <select 
     class="form-control"
-    v-model="modelValue" 
     @change="changeOption"
+    :value="modelValue"
   >
     <option disabled value="">Выберите из списка</option>
     <option

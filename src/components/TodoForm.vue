@@ -30,19 +30,9 @@
 
 <script>
   import { uniqueId } from '@/functions/functions.js';
-  import axios from 'axios';
+  import { mapState, mapActions, mapMutations } from 'vuex';
 
   export default {
-    props: {
-      formCondition: {
-        type: String,
-        default: true
-      },
-      todoItem: {
-        type: Object,
-        default: true
-      }
-    },
     data() {
       return {
         task: { 
@@ -59,24 +49,26 @@
         this.task.title = this.todoItem.title
       }
     },
+    computed: {
+      ...mapState({
+        todoItem: state => state.task.todoItem,
+        formCondition: state => state.task.formCondition,
+      }),
+    },
     methods: {
+      ...mapMutations({
+        setTodoItemsCreate: 'task/setTodoItemsCreate',
+        setModalVisible: 'task/setModalVisible',
+        setTodoItemsTitle: 'task/setTodoItemsTitle',
+        setTodoItemTitle: 'task/setTodoItemTitle',
+      }),
+      ...mapActions({
+        putTaskTitle: 'task/putTaskTitle',
+        postTask: 'task/postTask',
+      }),
+
       validInput() {
         return this.task.title.length
-      },
-
-      async postTask(task) {
-        try {
-          await axios.post('http://localhost:5000/tasks', {
-            id: task.id, 
-            title: task.title, 
-            done: task.done, 
-            desc: task.desc, 
-            created: task.created, 
-            updated: task.updated,
-          });
-        } catch (e) {
-          console.log(e.message);
-        }
       },
 
       createTask() {
@@ -84,8 +76,9 @@
 
           this.task.id = uniqueId();
 
-          this.postTask(this.task);
-          this.$emit('create' , this.task);
+          this.setTodoItemsCreate(this.task);
+          this.postTask();
+          this.setModalVisible(false);
 
           this.task = {
             title: '', 
@@ -97,7 +90,10 @@
         }
 
         if (this.formCondition === 'edit') {
-          this.$emit('editTask', this.task);
+          this.setTodoItemsTitle(this.task);
+          this.setTodoItemTitle(this.task.title);
+          this.putTaskTitle();
+          this.setModalVisible(false);
         }
       },
 

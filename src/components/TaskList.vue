@@ -11,11 +11,7 @@
     v-else-if="todoItems.length > 0"
   >
     <transition-group name="tasks-list">
-      <TaskItem 
-        @completedTask="completedTask"
-        @deleteTask="deleteTask"
-        @setModalVisible="setModalVisible"
-        @setTodoItem="setTodoItem"
+      <TaskItem
         v-for="item in newTasksList"
         :key="item.id"
         :item="item"
@@ -36,55 +32,35 @@
 
 <script>
   import TaskItem from '@/components/TaskItem';
+  import { mapState, mapGetters } from 'vuex';
 
   export default {
     components: { 
       TaskItem 
     },
-    props: {
-      newTasksList: {
-        type: Object,
-        required: true
-      },
-      todoItems: {
-        type: Object,
-        required: true
-      },
-      selectedValue: {
-        type: String,
-      },
-      statisticsValue: {
-        type: Object,
-      },
+    computed: {
+      ...mapState({
+        selectedValue: state => state.task.selectedValue,
+        todoItems: state => state.task.todoItems,
+        newTasksList: state => state.task.newTasksList,
+      }),
+      ...mapGetters({
+        completedTasks: 'task/completedTasks',
+        allTasks: 'task/allTasks',
+      })
     },
     methods: {
       scroll() {
+        // console.log('123');
       },
 
-      completedTask(elem) {
-        this.$emit("completedTask", elem);
-      },
-
-      deleteTask(elem) {
-        this.$emit("deleteTask", elem);
-      },
-
-      setModalVisible(val) {
-        this.$emit("setModalVisible", val);
-      },
-
-      setTodoItem(val) {
-        this.$emit("setTodoItem", val);
-      },
-
-      // Пока так, потом запишу красивей 
       titleBlock() {
         if (this.selectedValue === 'allTasks') {
           return 'Задача не найдена'
         }
 
         if (this.selectedValue === 'completedTasks') {
-          if (this.statisticsValue.completedTasks === 0) {
+          if (this.completedTasks === 0) {
             return 'Нет выполненных задач'
           } else {
             return 'Задача не найдена'
@@ -92,7 +68,7 @@
         }
 
         if (this.selectedValue === 'outstandingTasks') {
-          if (this.statisticsValue.allTasks - this.statisticsValue.completedTasks === 0) {
+          if (this.allTasks - this.completedTasks === 0) {
             return 'Все задачи выполнены'
           } else {
             return 'Задача не найдена'

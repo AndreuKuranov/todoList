@@ -43,7 +43,7 @@
 </template>
 
 <script>
-  import axios from 'axios';
+  import { mapActions, mapMutations } from 'vuex';
 
   export default {
     props: {
@@ -53,23 +53,33 @@
       }
     },
     methods: {
+      ...mapMutations({
+        setFormCondition: 'task/setFormCondition',
+        setModalVis: 'task/setModalVisible',
+        setTodoItem: 'task/setTodoItem',
+        setTodoItemsCompleted: 'task/setTodoItemsCompleted',
+        setTaskTd: 'task/setTaskTd',
+        setTodoItemsDelete: 'task/setTodoItemsDelete',
+      }),
+      ...mapActions({
+        putTaskCompleted: 'task/putTaskCompleted',
+        delTask: 'task/delTask',
+      }),
+
       completedTask(elem) {
-        this.$emit("completedTask", elem);
-      },
-      async delTask(id) {
-        try {
-          await axios.delete(`http://localhost:5000/tasks/${id}`);
-        } catch (e) {
-          console.log(e.message);
-        }
+        this.setTodoItem(elem);
+        this.setTodoItemsCompleted();
+        this.putTaskCompleted();
       },
       deleteTask(elem) {
-        this.delTask(elem.id)
-        this.$emit("deleteTask", elem);
+        this.setTaskTd(elem.id);
+        this.setTodoItemsDelete(elem);
+        this.delTask();
       },
       setModalVisible(val) {
-        this.$emit("setModalVisible", val);
-        this.$emit("setTodoItem", this.item);
+        this.setFormCondition(val);
+        this.setModalVis(true);
+        this.setTodoItem(this.item);
       },
     },
   }

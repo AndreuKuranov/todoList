@@ -3,12 +3,14 @@
     <div class="col-9">
       <my-input
         placeholder="Serch tasks"
-        v-model="correctTasks"
+        @input="setCorrectTasks($event.target.value)"
+        :value="correctTasks"
       />
     </div>
     <div class="col-3">
       <my-select
-        v-model="defaultSelectedValue"
+        @change="setDefaultSelectedValue($event.target.value)"
+        :value="defaultSelectedValue"
         :options="filterOptions"
       />
     </div>
@@ -16,62 +18,43 @@
 </template>
 
 <script>
-export default {
-  props: {
-    todoItems: {
-      type: Object,
-      required: true
+  import { mapState, mapGetters, mapMutations } from 'vuex';
+
+  export default {
+    methods: {
+      ...mapMutations({
+        setCorrectTasks: 'task/setCorrectTasks',
+        setDefaultSelectedValue: 'task/setDefaultSelectedValue',
+        setSelectedValue: 'task/setSelectedValue',
+        setNewTasksList: 'task/setNewTasksList',
+      }),
     },
-  },
-  data() {
-    return {
-      correctTasks: '',
-      filterOptions: [
-        {value: 'allTasks', name: 'Отображать все задачи'},
-        {value: 'completedTasks', name: 'Отображать выполненные'},
-        {value: 'outstandingTasks', name: 'Отображать невыполненные'},
-      ],
-      defaultSelectedValue: 'allTasks',
-    }
-  },
-  methods: {
-    sortedTaskList() {
-      this.$emit(
-        'sortedTaskList' , 
-        this.serchTasks
-      );
+    mounted() {
+      this.setNewTasksList(this.serchTasks);
+      this.setSelectedValue(this.defaultSelectedValue);
     },
-    setSelectedValue(val) {
-      this.$emit('setSelectedValue', val);
-    }
-  },
-  mounted() {
-    this.sortedTaskList();
-    this.setSelectedValue(this.defaultSelectedValue);
-  },
-  computed: {
-    filterTasks() {
-      return this.todoItems.filter(item => this.defaultSelectedValue === this.filterOptions[0].value || 
-      this.defaultSelectedValue === this.filterOptions[1].value && item.done || 
-      this.defaultSelectedValue === this.filterOptions[2].value && !item.done
-      )
+    computed: {
+      ...mapState({
+        defaultSelectedValue: state => state.task.defaultSelectedValue,
+        filterOptions: state => state.task.filterOptions,
+        correctTasks: state => state.task.correctTasks,
+      }),
+      ...mapGetters({
+        serchTasks: 'task/serchTasks',
+      }),
     },
-    serchTasks() {
-      return this.filterTasks.filter(item => item.title.toLowerCase().includes(this.correctTasks.toLowerCase()))
-    }
-  },
-  watch: {
-    serchTasks: {
-      handler() {
-        this.sortedTaskList();
+    watch: {
+      serchTasks: {
+        handler() {
+          this.setNewTasksList(this.serchTasks);
+        },
+        deep: true
       },
-      deep: true
-    },
-    defaultSelectedValue(val) {
-      this.setSelectedValue(val);
+      defaultSelectedValue(val) {
+        this.setSelectedValue(val);
+      }
     }
   }
-}
 </script>
 
 <style scoped>

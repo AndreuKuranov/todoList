@@ -11,7 +11,7 @@
             query: { 
               title: item.title
             }
-          })" 
+          })"
           class="btn list-group-item"
           :class="{'bg-success': item.id === $route.params.id}"
         >
@@ -31,7 +31,7 @@
 
 <script>
   import TodoTitle from '@/components/TodoTitle';
-  import axios from 'axios';
+  import { mapState, mapActions } from 'vuex';
 
   export default {
     components: {
@@ -40,22 +40,22 @@
     data() {
       return {
         message: `Task: ${this.$route.query.title}`,
-        todoItems: [],
       }
     },
+    computed: {
+      ...mapState({
+        todoItems: state => state.task.todoItems,
+      }),
+    },
     methods: {
-      async getTasks() {
-        try {
-          const response = await axios.get('http://localhost:5000/tasks');
-          this.todoItems = response.data;
-        } catch (e) {
-          console.log(e.message);
-        }
-      }
+      ...mapActions({
+        getTasks: 'task/getTasks',
+      }),
     },  
     mounted() {
-      // по хорошему это берется из стора или нужно хранить данные в корневом компоненте и потом раскидывать, а так получается лишний запрос
-      this.getTasks()
+      if (this.todoItems.length === 0) {
+        this.getTasks();
+      }
     },
     watch: {
       $route(toRoute, ftomRoute) {
