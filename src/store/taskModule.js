@@ -9,7 +9,6 @@ export const taskModule = {
     modalVisible: false,
     formCondition: '', 
     todoItem: {},
-    newTodoItem: {},
     todoItemTitle: '',
     taskTd: '',
     correctTasks: '',
@@ -62,7 +61,6 @@ export const taskModule = {
       state.todoItems = state.todoItems.filter((item) => item.id !== elem.id);
     },
     setTodoItemsCreate(state, task) {
-      state.newTodoItem = task
       state.todoItems.push(task);
     },
     setTodoItemsCompleted(state) {
@@ -107,18 +105,16 @@ export const taskModule = {
     },
   },
   actions: {
-    async postTask({state}) {
+    async postTask({state}, task) {
       try {
         await axios.post('http://localhost:5000/tasks', {
-          id: state.newTodoItem.id, 
-          title: state.newTodoItem.title, 
-          done: state.newTodoItem.done, 
-          desc: state.newTodoItem.desc, 
-          created: state.newTodoItem.created, 
-          updated: state.newTodoItem.updated,
+          id: task.id, 
+          title: task.title, 
+          done: task.done, 
+          desc: task.desc, 
+          created: task.created, 
+          updated: task.updated,
         });
-
-        state.newTodoItem = {};
       } catch (e) {
         console.log(e.message);
       }

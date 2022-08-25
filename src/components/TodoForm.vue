@@ -77,7 +77,7 @@
           this.task.id = uniqueId();
 
           this.setTodoItemsCreate(this.task);
-          this.postTask();
+          this.postTask(this.task);
           this.setModalVisible(false);
 
           this.task = {
