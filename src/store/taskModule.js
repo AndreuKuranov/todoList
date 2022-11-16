@@ -121,8 +121,8 @@ export const taskModule = {
     },
     async getTasks({state, commit}) {
       try {
-        const response = await axios.get('http://localhost:5000/tasks');
-        commit('setTodoItems', response.data);
+        const { data } = await axios.get('http://localhost:5000/tasks');
+        commit('setTodoItems', data);
       } catch (e) {
         console.log(e.message);
       }
